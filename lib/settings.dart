@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokeprj/theme_mode_notifier.dart';
+import 'package:pokeprj/notifier/theme_mode_notifier.dart';
 import 'package:pokeprj/theme_mode_section_page.dart';
 import 'package:provider/provider.dart';
 
