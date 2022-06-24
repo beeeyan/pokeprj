@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:pokeprj/poke_detail.dart';
 import 'package:pokeprj/settings.dart';
 import 'package:pokeprj/theme_mode.dart';
+import 'package:pokeprj/theme_mode_notifier.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final SharedPreferences pref = await SharedPreferences.getInstance();
+  final themeModeNotifier = ThemeModeNotifier(pref);
+  runApp(ChangeNotifierProvider(
+    create: (context) => themeModeNotifier,
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -19,18 +28,19 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    loadThemeMode().then((val) => setState(() => themeMode = val));
+    // loadThemeMode().then((val) => setState(() => themeMode = val));
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      themeMode: themeMode,
-      home: const TopPage(),
-    );
+    return Consumer<ThemeModeNotifier>(
+        builder: (context, modeNotifier, child) => MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData.light(),
+              darkTheme: ThemeData.dark(),
+              themeMode: modeNotifier.mode,
+              home: const TopPage(),
+            ));
   }
 }
 
