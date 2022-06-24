@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokeprj/theme_mode.dart';
 import 'package:pokeprj/theme_mode_section_page.dart';
 
 class Settings extends StatefulWidget {
@@ -9,6 +10,13 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   ThemeMode _themeMode = ThemeMode.system;
+
+  @override
+  void initState() {
+    super.initState();
+    // loadThemeModeが呼ばれたときに、valを_themeModeに設定する。
+    loadThemeMode().then((val) => setState(() => _themeMode = val));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +35,7 @@ class _SettingsState extends State<Settings> {
               ),
             );
             setState(() => _themeMode = ret!);
+            await saveThemeMode(_themeMode);
           },
         ),
         SwitchListTile(

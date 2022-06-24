@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:pokeprj/poke_detail.dart';
 import 'package:pokeprj/settings.dart';
+import 'package:pokeprj/theme_mode.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeMode themeMode = ThemeMode.system;
+
+  @override
+  void initState() {
+    super.initState();
+    loadThemeMode().then((val) => setState(() => themeMode = val));
+  }
 
   @override
   Widget build(BuildContext context) {
-    ThemeMode mode = ThemeMode.system;
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: mode,
+      themeMode: themeMode,
       home: const TopPage(),
     );
   }
