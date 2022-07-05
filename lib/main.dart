@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokeprj/consts/pokeapi.dart';
 import 'package:pokeprj/notifier/pokemons_notifier.dart';
 import 'package:pokeprj/poke_detail.dart';
+import 'package:pokeprj/poke_list.dart';
 import 'package:pokeprj/pokemon.dart';
 import 'package:pokeprj/settings.dart';
 import 'package:pokeprj/notifier/theme_mode_notifier.dart';
@@ -95,21 +96,6 @@ class _TopPageState extends State<TopPage> {
   }
 }
 
-class PokeList extends StatelessWidget {
-  const PokeList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<PokemonsNotifier>(
-        builder: (context, pokes, child) => ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-              itemCount: 10,
-              itemBuilder: (context, index) =>
-                  PokeListItem(poke: pokes.byId(index + 1)),
-            ));
-  }
-}
-
 class PokeListItem extends StatelessWidget {
   const PokeListItem({Key? key, required this.poke}) : super(key: key);
   final Pokemon? poke;
@@ -140,7 +126,7 @@ class PokeListItem extends StatelessWidget {
         onTap: () => {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (BuildContext context) => const PokeDetail(),
+              builder: (BuildContext context) => PokeDetail(poke: poke!,),
             ),
           ),
         },
