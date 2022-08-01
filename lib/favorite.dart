@@ -4,4 +4,11 @@ class Favorite {
   Favorite({
     required this.pokeId,
   });
+
+Map<String, dynamic> toMap() {
+    return {
+      'id': pokeId,
+    };
+  }
+
 }
