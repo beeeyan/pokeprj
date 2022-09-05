@@ -32,10 +32,10 @@ class _PokeListState extends State<PokeList> {
     return ret;
   }
 
-  int itemId(int index) {
+  int itemId(List<Favorite> favs, int index) {
     int ret = index + 1; // 通常モード
-    if (isFavoriteMode) {
-      // ret = favMock[index].pokeId;
+    if (isFavoriteMode && index < favs.length) {
+      ret = favs[index].pokeId;
     }
     return ret;
   }
@@ -114,7 +114,7 @@ class _PokeListState extends State<PokeList> {
                           );
                         } else {
                           return PokeListItem(
-                            poke: pokes.byId(itemId(index)),
+                            poke: pokes.byId(itemId(favs.favs, index)),
                           );
                         }
                       });
