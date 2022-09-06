@@ -7,15 +7,17 @@ class ViewModeBottomSheet extends StatelessWidget {
   const ViewModeBottomSheet({
     Key? key,
     required this.favMode,
+    required this.changeFavMode,
+    required this.isGridMode,
+    required this.changeGridMode,
   }) : super(key: key);
   final bool favMode;
+  final Function(bool) changeFavMode;
+  final bool isGridMode;
+  final Function(bool) changeGridMode;
 
   String mainText(bool fav) {
-    if (fav) {
-      return 'お気に入りのポケモンが表示されています';
-    } else {
-      return 'すべてのポケモンが表示されています';
-    }
+    return '表示設定';
   }
 
   String menuTitle(bool fav) {
@@ -31,6 +33,22 @@ class ViewModeBottomSheet extends StatelessWidget {
       return '全てのポケモンが表示されます';
     } else {
       return 'お気に入りに登録したポケモンのみが表示されます';
+    }
+  }
+
+  String menuGridTitle(bool grid) {
+    if (grid) {
+      return 'リスト表示に切り替え';
+    } else {
+      return 'グリッド表示に切り替え';
+    }
+  }
+
+  String menuGridSubtitle(bool grid) {
+    if (grid) {
+      return 'ポケモンをグリッド表示します';
+    } else {
+      return 'ポケモンをリスト表示します';
     }
   }
 
@@ -69,7 +87,21 @@ class ViewModeBottomSheet extends StatelessWidget {
                 menuSubtitle(favMode),
               ),
               onTap: () {
-                Navigator.pop(context, true);
+                changeFavMode(favMode);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.grid_3x3),
+              title: Text(
+                menuGridTitle(isGridMode),
+              ),
+              subtitle: Text(
+                menuSubtitle(isGridMode),
+              ),
+              onTap: () {
+                changeGridMode(isGridMode);
+                Navigator.pop(context);
               },
             ),
             OutlinedButton(
