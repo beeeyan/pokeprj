@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokeprj/consts/pokeapi.dart';
 import 'package:pokeprj/poke_detail.dart';
@@ -11,15 +12,18 @@ class PokeListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     if(poke != null) {
       return ListTile(
-        leading: Container(
-          width: 80,
-          decoration: BoxDecoration(
-            color: (pokeTypeColors[poke!.types.first] ?? Colors.grey[100])?.withOpacity(.3),
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              fit: BoxFit.fitWidth,
-              image: NetworkImage(
-                poke!.imageUrl,
+        leading: Hero(
+          tag: poke!.name,
+          child: Container(
+            width: 80,
+            decoration: BoxDecoration(
+              color: (pokeTypeColors[poke!.types.first] ?? Colors.grey[100])?.withOpacity(.3),
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                fit: BoxFit.fitWidth,
+                image: CachedNetworkImageProvider(
+                  poke!.imageUrl,
+                ),
               ),
             ),
           ),
